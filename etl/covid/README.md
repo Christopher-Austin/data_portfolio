@@ -13,7 +13,7 @@ Given the task of ETL from an API. A covid-19 API was used, just the countries w
 
 ### Extract
 
-- headers blocked out to prevent unnecessary calls
+- API key hidden with dotenv
 - response converted to json
 
 ### Transform
@@ -22,11 +22,11 @@ Given the task of ETL from an API. A covid-19 API was used, just the countries w
 
 ## Local MySQL Connection
 
-- password was replaced with \* to prevent spillage
+- password was hidden with dotenv
 - created table and set to replace because to limit double entries unless from the API
 
 ## Convert df to format for MySQL Insertion
 
 ### Load
 
-- engine password was replaced with \* to prevent spillage
+- engine password was hidden with dotenv
