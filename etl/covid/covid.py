@@ -12,8 +12,7 @@ headers = {'x-rapidapi-host': 'covid-193.p.rapidapi.com', 'x-rapidapi-key': os.g
 r = requests.get(url='https://covid-193.p.rapidapi.com/countries', headers=headers)
 #  Get response back in json
 res = r.json()
-#  Normalize json to make a dataframe
-df = pd.json_normalize(res, 'response')
+
 #  Connect to local MySQL
 try:
     mydb = mysql.connector.connect(
@@ -24,11 +23,15 @@ try:
     )
     print("Connection established")
     cursor = mydb.cursor()
-    cursor.execute("create table if not exists countries (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(200))")
-    print("Table created")
 except mysql.connector.Error as err:
     print("An error occurred:", err)
 
+#  Normalize json to make a dataframe
+data = pd.json_normalize(res, ["response"])
+df = pd.DataFrame(data)
+df = df.rename(columns={0:"name"})
+print(df)
+
 #  Convert df to be inserted in MySQL
 engine = create_engine(f"mysql+mysqlconnector://root:{os.getenv('PW')}@localhost/covid_db")
-df.to_sql(name='countries', con=engine, index=True, if_exists='replace')
+df.to_sql(name='countries', con=engine, index=False, if_exists='replace')
