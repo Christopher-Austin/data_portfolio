@@ -30,7 +30,6 @@ except mysql.connector.Error as err:
 data = pd.json_normalize(res, ["response"])
 df = pd.DataFrame(data)
 df = df.rename(columns={0:"name"})
-print(df)
 
 #  Convert df to be inserted in MySQL
 engine = create_engine(f"mysql+mysqlconnector://root:{os.getenv('PW')}@localhost/covid_db")
