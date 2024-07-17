@@ -1,2 +1,6 @@
 venv
 .env
+.vscode
+sql_load
+postgres.session.sql
+sql_course.session.sql
